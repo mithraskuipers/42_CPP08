@@ -1,5 +1,5 @@
 # Executable name
-NAME = cpp07_ex01
+NAME = cpp08_ex01
 
 # Compiler and flags
 CC = c++

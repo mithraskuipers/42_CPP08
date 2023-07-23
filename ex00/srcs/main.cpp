@@ -6,7 +6,7 @@
 /*   By: mikuiper <mikuiper@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/28 23:27:53 by mikuiper      #+#    #+#                 */
-/*   Updated: 2023/06/28 23:57:30 by mikuiper      ########   odam.nl         */
+/*   Updated: 2023/07/11 13:54:28 by mikuiper      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@ int main() {
 		numbers.push_back(40);
 		numbers.push_back(50);
 
-		int target1 = 30;
-		// Specify the correct container type (i.e. for integers) to capture the return value of easyfind()
+		int target1 = 30; // value to find using easyfind()
+		// easyfind() must return pointer to found element, so..
+		// I specify the correct container type (i.e. for integers) to capture the return value of easyfind()
 		std::vector<int>::iterator it1 = easyfind(numbers, target1);
 		std::cout << "Value " << target1 << " found at index [" << std::distance(numbers.begin(), it1) << "]" << std::endl;
 		

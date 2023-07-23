@@ -17,8 +17,8 @@ HDR_DIR = incs/
 OBJ_DIR = objs/
 
 # Source, object, and header files
-SRC_FILES = main.cpp
-HDR_FILES = 
+SRC_FILES = main.cpp span.cpp
+HDR_FILES = span.hpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 # Paths for source, object, and header files

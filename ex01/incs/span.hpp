@@ -6,7 +6,7 @@
 /*   By: mikuiper <mikuiper@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/13 09:46:17 by mikuiper      #+#    #+#                 */
-/*   Updated: 2023/08/13 17:39:41 by mikuiper      ########   odam.nl         */
+/*   Updated: 2023/08/13 20:14:15 by mikuiper      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@
 
 class Span
 {
+	private:
+		std::vector<int> numbers;
+		unsigned int maxSize;
 	public:
 		Span(unsigned int N);
+		Span(const Span &other);
+		~Span();
+		Span &operator=(const Span &other);
 		void addNumber(int num);
 		int shortestSpan() const;
 		int longestSpan() const;
 		void addRange(int* begin, int* end); // Extra, see end of subject
 		void printContents() const; // Extra, to check above addRange method
-	private:
-		std::vector<int> numbers;
-		unsigned int maxSize;
 };
 
 #endif

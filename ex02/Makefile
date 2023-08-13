@@ -18,7 +18,7 @@ OBJ_DIR = objs/
 
 # Source, object, and header files
 SRC_FILES = main.cpp
-HDR_FILES = 
+HDR_FILES = MutantStack.hpp
 OBJ_FILES = $(SRC_FILES:.cpp=.o)
 
 # Paths for source, object, and header files

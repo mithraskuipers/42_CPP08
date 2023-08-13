@@ -6,7 +6,7 @@
 /*   By: mikuiper <mikuiper@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/13 09:46:15 by mikuiper      #+#    #+#                 */
-/*   Updated: 2023/08/13 17:37:35 by mikuiper      ########   odam.nl         */
+/*   Updated: 2023/08/13 20:14:43 by mikuiper      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,30 @@
 
 Span::Span(unsigned int N)
 {
+	std::cout << "Span parameterized constructor called" << std::endl;
 	this->maxSize = N;
+}
+
+Span::~Span()
+{
+	std::cout << "Span destructor called" << std::endl;
+}
+
+Span &Span::operator=(const Span &other)
+{
+    if (this == &other)
+    {
+        return (*this);
+    }
+    numbers = other.numbers;
+    maxSize = other.maxSize;
+    return (*this);
+}
+
+Span::Span(const Span &other) : numbers(other.numbers), maxSize(other.maxSize)
+{
+	std::cout << "Span Copy Constructor called" << std::endl;
+	*this = other;
 }
 
 // Before adding a number, it checks whether the class is "full"

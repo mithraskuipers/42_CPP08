@@ -1,49 +1,56 @@
+#ifndef MUTANTSTACK_HPP
+#define MUTANTSTACK_HPP
+
 #include <iostream>
 #include <stack>
 
 template <class T>
-
 class MutantStack : public std::stack<T>
 {
 public:
-	typedef std::stack<T> stack;
-	typedef typename stack::container_type container;
-	typedef typename container::iterator iterator;
+    typedef typename std::stack<T>::container_type::iterator iterator;
 
-	// Constructors
-	MutantStack() : stack()
+    MutantStack() : std::stack<T>()
+    {
+        std::cout << "Default Constructor called" << std::endl;
+    }
+
+    ~MutantStack()
+    {
+        std::cout << "Destructor called" << std::endl;
+    }
+
+	MutantStack(const MutantStack &other) : std::stack<T>(other)
 	{
-		std::cout << "Default Constructor called" << std::endl;
+	    std::cout << "Copy Constructor called" << std::endl;
+
+	    // Copy the elements from 'other' to the current stack
+	    std::stack<T> tempStack(other); // Use the base class's copy constructor
+	    while (!tempStack.empty())
+	    {
+	        this->push(tempStack.top()); // Push each element onto the current stack
+	        tempStack.pop(); // Pop the element from the temporary stack
+	    }
 	}
 
-	MutantStack(const stack &src) : stack(src)
-	{
-		std::cout << "Copy Constructor called" << std::endl;
-	}
+	    MutantStack &operator=(const MutantStack &other)
+    {
+        if (this != &other)
+        {
+            std::stack<T>::operator=(other);
+        }
+        return (*this);
+    }
 
-	// Deconstuctor
-	~MutantStack()
-	{
-		std::cout << "Deconstuctor called" << std::endl;
-	}
+    iterator begin()
+    {
+        return std::stack<T>::c.begin();
+    }
 
-	// Overloaded opperators
-	stack &operator=(const stack &src)
-	{
-		if (*this != src)
-			*this = src;
-		return (*this);
-	}
-
-	// begin iterator
-	iterator begin()
-	{
-		return (stack::c.begin());
-	}
-
-	// end iterator
-	iterator end()
-	{
-		return (stack::c.end());
-	}
+    iterator end()
+    {
+        return std::stack<T>::c.end();
+    }
 };
+
+#endif

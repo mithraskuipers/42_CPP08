@@ -2,62 +2,56 @@
 
 int main()
 {
-	// creation of a string stack
-	MutantStack<std::string> mstack_string;
-	mstack_string.push("Five");
-	mstack_string.push("Seventeen");
-	mstack_string.pop();
-	mstack_string.push("Three");
-	mstack_string.push("Seven hundred thirty-seven");
+	// Int stack
+	MutantStack<int> mutantstack_int;
+	mutantstack_int.push(1);
+	mutantstack_int.push(2);
+	mutantstack_int.pop();
+	mutantstack_int.push(3);
+	mutantstack_int.push(4);
 
-	// creation of a int stack
-	MutantStack<int> mstack;
-	mstack.push(5);		// addding 5
-	mstack.push(17);	// adding 17
-	mstack.pop();		// deleting 17
-	mstack.push(3);		// adding 3
-	mstack.push(737);	// adding 737
+	MutantStack<int>::iterator iterator_start = mutantstack_int.begin();
+	MutantStack<int>::iterator iterator_end = mutantstack_int.end();
 
-	std::cout << std::endl;
+	std::cout << "Iterate over mutantstack_int: ";
+	while (iterator_start != iterator_end)
+	{
+		std::cout << *iterator_start << " - ";
+		iterator_start++;
+	}
+	std::cout << std::endl << std::endl;
 
-	// start working with string stack ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-	MutantStack<std::string>::iterator s_it = mstack_string.begin();
-	MutantStack<std::string>::iterator e_it = mstack_string.end();
+	std::cout << "mutantstack_int size: " << mutantstack_int.size() << std::endl;
+	std::cout << "Is mutantstack_int empty?: " << (mutantstack_int.empty() ? "yes" : "no") << std::endl;
 
-	++s_it;
-	--s_it;
+	// String stack
+	MutantStack<std::string> mutantstack_string;
+	mutantstack_string.push("one");
+	mutantstack_string.push("two");
+	mutantstack_string.pop();
+	mutantstack_string.push("three");
+	mutantstack_string.push("four");
+
+	MutantStack<std::string>::iterator s_it = mutantstack_string.begin();
+	MutantStack<std::string>::iterator e_it = mutantstack_string.end();
+
 	std::cout << "String Iterator: ";
 	while (s_it != e_it)
 	{
-		std::cout << *s_it << ", ";
-		++s_it;
+		std::cout << *s_it << " - ";
+		s_it++;
 	}
+	std::cout << std::endl << std::endl;
 
-	std::cout << std::endl << std::endl << "↓↓↓ String Stack Information ↓↓↓\nSize: " << mstack_string.size() << "\nEmpty: " << (mstack_string.empty() ? "true" : "false") << std::endl;
-	mstack_string.pop();
-	mstack_string.pop();
-	mstack_string.pop();
-	std::cout << std::endl << std::endl << "↓↓↓ String Stack Information ↓↓↓\nSize: " << mstack_string.size() << "\nEmpty: " << (mstack_string.empty() ? "true" : "false") << std::endl;
-	// end working with string stack ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+	std::cout << "mutantstack_string size: " << mutantstack_string.size() << std::endl;
+	std::cout << "Is mutantstack_string empty?: " << (mutantstack_string.empty() ? "yes" : "no") << std::endl;
 
-	std::cout << std::endl << "-------------------------------------------------------------------" << std::endl << std::endl;
+	mutantstack_string.pop();
+	mutantstack_string.pop();
+	mutantstack_string.pop();
 
-	// start working with int stack ↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓↓
-	MutantStack<int>::iterator it_s = mstack.begin();
-	MutantStack<int>::iterator it_e = mstack.end();
-
-	++it_s;
-	--it_s;
-
-	std::cout << "Int Iterator: ";
-	while (it_s != it_e)
-	{
-		std::cout << *it_s << "` ";
-		++it_s;
-	}
-
-	std::cout << std::endl << std::endl << "↓↓↓ Int Stack Information ↓↓↓\nSize: " << mstack.size() << "\nEmpty: " << (mstack.empty() ? "true" : "false") << std::endl << std::endl;
-	// end working with int stack ↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑↑
+	std::cout << "mutantstack_string size: " << mutantstack_string.size() << std::endl;
+	std::cout << "Is mutantstack_string empty?: " << (mutantstack_string.empty() ? "yes" : "no") << std::endl;
 
 	return 0;
 }

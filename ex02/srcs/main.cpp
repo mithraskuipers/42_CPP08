@@ -10,14 +10,14 @@ int main()
 	mutantstack_int.push(3);
 	mutantstack_int.push(4);
 
-	MutantStack<int>::iterator iterator_start = mutantstack_int.begin();
-	MutantStack<int>::iterator iterator_end = mutantstack_int.end();
+	MutantStack<int>::iterator int_iterator_start = mutantstack_int.begin();
+	MutantStack<int>::iterator int_iterator_end = mutantstack_int.end();
 
 	std::cout << "Iterate over mutantstack_int: ";
-	while (iterator_start != iterator_end)
+	while (int_iterator_start != int_iterator_end)
 	{
-		std::cout << *iterator_start << " - ";
-		iterator_start++;
+		std::cout << *int_iterator_start << " - ";
+		int_iterator_start++;
 	}
 	std::cout << std::endl << std::endl;
 
@@ -32,14 +32,14 @@ int main()
 	mutantstack_string.push("three");
 	mutantstack_string.push("four");
 
-	MutantStack<std::string>::iterator s_it = mutantstack_string.begin();
-	MutantStack<std::string>::iterator e_it = mutantstack_string.end();
+	MutantStack<std::string>::iterator string_iterator_start = mutantstack_string.begin();
+	MutantStack<std::string>::iterator string_iterator_end = mutantstack_string.end();
 
 	std::cout << "String Iterator: ";
-	while (s_it != e_it)
+	while (string_iterator_start != string_iterator_end)
 	{
-		std::cout << *s_it << " - ";
-		s_it++;
+		std::cout << *string_iterator_start << " - ";
+		string_iterator_start++;
 	}
 	std::cout << std::endl << std::endl;
 

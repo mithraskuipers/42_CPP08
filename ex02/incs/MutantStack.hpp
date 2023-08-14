@@ -8,49 +8,75 @@ template <class T>
 class MutantStack : public std::stack<T>
 {
 public:
-    typedef typename std::stack<T>::container_type::iterator iterator;
+	MutantStack() : std::stack<T>() // Init of std::stack<T>() is necessary to ensure proper construction of base class and derived class
+	{
+		std::cout << "Default Constructor called" << std::endl;
+	}
 
-    MutantStack() : std::stack<T>()
-    {
-        std::cout << "Default Constructor called" << std::endl;
-    }
-
-    ~MutantStack()
-    {
-        std::cout << "Destructor called" << std::endl;
-    }
+	~MutantStack()
+	{
+		std::cout << "Destructor called" << std::endl;
+	}
 
 	MutantStack(const MutantStack &other) : std::stack<T>(other)
 	{
-	    std::cout << "Copy Constructor called" << std::endl;
+		std::cout << "Copy Constructor called" << std::endl;
 
-	    // Copy the elements from 'other' to the current stack
-	    std::stack<T> tempStack(other); // Use the base class's copy constructor
-	    while (!tempStack.empty())
-	    {
-	        this->push(tempStack.top()); // Push each element onto the current stack
-	        tempStack.pop(); // Pop the element from the temporary stack
-	    }
+		// Copy the elements from 'other' to the current stack.
+		// Done using pop(). To not shrink the original, first make copy 'tempStack' using copy constructor.
+		std::stack<T> tempStack(other);
+		while (!tempStack.empty())
+		{
+			this->push(tempStack.top());										// Push each element the current stack
+			tempStack.pop();													// Remove the element from the temporary stack. pop() does not return removed element.
+		}
 	}
 
-	    MutantStack &operator=(const MutantStack &other)
-    {
-        if (this != &other)
-        {
-            std::stack<T>::operator=(other);
-        }
-        return (*this);
-    }
+	MutantStack &operator=(const MutantStack &other)
+	{
+		if (this != &other)
+		{
+			// Copy the underlying container structure and its contents from other (source stack) to the current instance (dest stack)
+			// The line below does that. It invokes the assignment operator of the base class std::stack<T>.
+			std::stack<T>::operator=(other);
 
-    iterator begin()
-    {
-        return std::stack<T>::c.begin();
-    }
+			// Clear the current stack
+			while (!this->empty())
+			{
+				this->pop();
+			}
 
-    iterator end()
-    {
-        return std::stack<T>::c.end();
-    }
+			// Copy elements from 'other' to the current stack
+			std::stack<T> tempStack(other);
+			while (!tempStack.empty())
+			{
+				this->push(tempStack.top());
+				tempStack.pop();
+			}
+		}
+		return (*this);
+	}
+
+	// Create alias named 'iterator' for the iterator type of the underlying container used by std::stack
+	// 'std::stack<T>::container_type' refers to the type of the underlying container that holds the std::stack elements
+	typedef typename std::stack<T>::container_type::iterator iterator;
+
+	// Add iterator functionality using custom begin method.
+	// begin() has return type 'iterator'
+	iterator begin()
+	{
+		// Access underlying container of std::stack using std::stack<T>::c
+		// Returns iterator pointing to first element of the underlying container
+		return (std::stack<T>::c.begin());
+	}
+	// Add iterator functionality using custom end method.
+	// end() has return type 'iterator'
+	iterator end()
+	{
+		// Access underlying container of std::stack using std::stack<T>::c
+		// Returns iterator pointing to last element of the underlying container
+		return(std::stack<T>::c.end());
+	}
 };
 
 #endif

@@ -1,84 +1,93 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        ::::::::            */
+/*   MutantStack.hpp                                    :+:    :+:            */
+/*                                                     +:+                    */
+/*   By: mikuiper <mikuiper@student.codam.nl>         +#+                     */
+/*                                                   +#+                      */
+/*   Created: 2023/08/31 08:27:55 by mikuiper      #+#    #+#                 */
+/*   Updated: 2023/09/07 16:53:20 by mikuiper      ########   odam.nl         */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef MUTANTSTACK_HPP
 #define MUTANTSTACK_HPP
 
 #include <iostream>
 #include <stack>
 
-template <class T>
-class MutantStack : public std::stack<T>
-{
+template <class T>																// Make clear we are going to create a template that takes a type T (container)
+class MutantStack : public std::stack<T>										// This template is a class template named 'MutantStack' that inherits from the base class 'std::stack<T>'
+{																				// Requires addition of "public std::stack" next to "<T>" since CPP doesn't know otherwise T is a class
 	public:
-		MutantStack() : std::stack<T>() // Init of std::stack<T>() is necessary to ensure proper construction of base class and derived class
+		// Default constructor
+		MutantStack() : std::stack<T>() //Initialize the base class (std::stack<T>) to ensure proper construction of both base and derived class
 		{
 			std::cout << "Default Constructor called" << std::endl;
 		}
 
-		~MutantStack()
+		// Destructor
+		~MutantStack()															// MutantStack inherits the destructor from the base class
 		{
-			std::cout << "Destructor called" << std::endl;
+			std::cout << "Destructor called" << std::endl;						// This is sufficient because I don't allocate additional resources.
 		}
 
-		MutantStack(const MutantStack &other) : std::stack<T>(other)
+		// Copy constructor
+		MutantStack(const MutantStack &other) : std::stack<T>(other)			// Inherits copy constructor of base class to correctly copy the internal state and elements from 'other'.
 		{
 			std::cout << "Copy Constructor called" << std::endl;
-
-			// Copy the elements from 'other' to the current stack.
-			// Done using pop(). To not shrink the original, first make copy 'tempStack' using copy constructor.
-			std::stack<T> tempStack(other);
+	
+			std::stack<T> tempStack(other);	// Create new container that is a copy of other. This "temp" 
 			while (!tempStack.empty())
 			{
-				this->push(tempStack.top());									// Copy top element of tempStack to current stack (this)
-				tempStack.pop();												// Remove the element from the temporary stack. pop() does not return removed element, only remove top element.
+				this->push(tempStack.top()); // Take last element from tempStack using top() and add that to the front of "this" using push().
+				tempStack.pop();             // Remove the element from the temporary stack using pop(). Note pop() does not return the removed element.
 			}
 		}
 
+		// Assignment operator overload
 		MutantStack &operator=(const MutantStack &other)
 		{
 			if (this != &other)
 			{
-				// Copy the underlying container structure and its contents from other (source stack) to the current instance (dest stack)
-				// The line below does that. It invokes the assignment operator of the base class std::stack<T>.
+				// Copy the underlying container structure and its contents from 'other' (source stack) to the current instance (destination stack).
+				// The line below does that by invoking the assignment operator of the base class std::stack<T>.
 				std::stack<T>::operator=(other);
-
-				// Clear the current stack
-				while (!this->empty())
+	
+				while (!this->empty())											// Clear the current stack in "this"
 				{
 					this->pop();
 				}
-
+	
 				// Copy elements from 'other' to the current stack
-				std::stack<T> tempStack(other);
+				std::stack<T> tempStack(other);	// Create new container that is a copy of other. This "temp" 
 				while (!tempStack.empty())
 				{
-					this->push(tempStack.top());								// Copy top element of tempStack to current stack (this)
-					tempStack.pop();											// Remove the element from the temporary stack. pop() does not return removed element, only remove top element.
+					this->push(tempStack.top()); // Take last element from tempStack using top() and add that to the front of "this" using push().
+					tempStack.pop();             // Remove the element from the temporary stack using pop(). Note pop() does not return the removed element.
 				}
 			}
 			return (*this);
 		}
-
-		// Create alias named 'iterator' for the iterator type of the underlying container used by std::stack.
-		// std::stack<T> <- stack template class, that will hold type T.
-		// container_type <- Access the container_type type within the std::stack class. Here that's 'double queue' (insertion/deletion at both ends).
-		// iterator <- Access the iterator type within the type of container_type.
-		typedef typename std::stack<T>::container_type::iterator iterator;
-
-		// Add iterator functionality using custom begin method.
-		// begin() has return type 'iterator'
-		iterator begin()
+	
+		typedef typename std::stack<T>::container_type::iterator iterator;		// Creation of alias for the iterator of the container
+																				// std::stack<T>		<- Container of type T.
+																				// iterator				<- Access the iterator within the container.
+																				// ::container_type		<- Only added because std::stack<T> on its own does not give direct access to the iterator.
+		// Add iterator functionality using a custom begin method. Inherits begin() from underlying base class.
+		// begin() has a return type of 'iterator' (see above).
+		iterator begin(void)
 		{
-			// Access underlying container of 'std::stack' using 'std::stack<T>::c'
-			// Returns iterator pointing to first element of the underlying container
-			return (std::stack<T>::c.begin());
+			return (std::stack<T>::c.begin());									// Access the underlying container of 'std::stack' using 'std::stack<T>::c'.
+																				// Returns an iterator pointing to the first element of the underlying container.
 		}
-		// Add iterator functionality using custom end method.
-		// end() has return type 'iterator'
-		iterator end()
+		// Add iterator functionality using a custom end method. Inherits end() from underlying base class.
+		// end() has a return type of 'iterator' (see above).
+		iterator end(void)
 		{
-			// Access underlying container of 'std::stack' using 'std::stack<T>::c'
-			// Returns iterator pointing to last element of the underlying container
-			return(std::stack<T>::c.end());
+			return (std::stack<T>::c.end());									// Access the underlying container of 'std::stack' using 'std::stack<T>::c'.
+																				// Returns an iterator pointing to the last element of the underlying container.
 		}
 };
 
-# endif
+#endif
